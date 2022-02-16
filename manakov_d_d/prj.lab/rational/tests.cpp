@@ -48,6 +48,7 @@ void RunTests() {
     TEST("Comparation Test", CmpTest);
     TEST("Summ and Substraction Test", SumSubTest);
     TEST("Multiplication Test", MulTest);
+    TEST("Division Test", DivTest);
 }
 
 int main() {
