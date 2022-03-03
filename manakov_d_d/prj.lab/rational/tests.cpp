@@ -1,10 +1,21 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "rational.h"
 #include <doctest/doctest.h>
+#include <sstream>
 
 TEST_CASE("testing input / output") {
-  CHECK(true);
-  CHECK(true);
+  std::stringstream ss;
+  ss << "-3 -7";
+
+  Rational R;
+  ss >> R;
+  CHECK(R == Rational(3, 7));
+  ss.clear();
+
+  ss << R;
+  std::string output;
+  std::getline(ss, output);
+  CHECK(output == "3 / 7");
 }
 
 TEST_CASE("testing reduce method") {
