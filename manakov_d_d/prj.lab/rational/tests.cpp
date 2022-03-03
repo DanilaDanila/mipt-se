@@ -1,57 +1,35 @@
-#include <iostream>
-#include <cassert>
-#include "rational.cpp"
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "rational.h"
+#include <doctest/doctest.h>
 
-#define TEST(testname, funcname) { \
-    std::cerr << testname << "\n"; \
-    assert(funcname()); \
-    std::cerr << "OK\n\n"; \
-};
-
-bool IOTest() {
-    Rational R;
-    std::cin >> R;
-
-    std::cout << R << " == '333 / 721'" <<"\n";
-    return true;
+TEST_CASE("testing input / output") {
+  CHECK(true);
+  CHECK(true);
 }
 
-bool ReduceTest() {
-    Rational R(210, -231);
+TEST_CASE("testing reduce method") {
+  Rational R(210, -231);
 
-    return R.Numerator() == -10 && R.Denominator() == 11;
+  CHECK(R.Numerator() == -10);
+  CHECK(R.Denominator() == 11);
 }
 
-bool CmpTest() {
-    return  Rational(-1, 2) < Rational(1, 2) &&
-            Rational(-1, 4) == Rational(16, -64);
+TEST_CASE("testing comparations") {
+  CHECK(Rational(-1, 2) < Rational(1, 2));
+  CHECK(Rational(-1, 4) == Rational(16, -64));
 }
 
-bool SumSubTest() {
-    Rational R(-11, 23);
-    Rational L(-8, -15);
+TEST_CASE("summ and substraction test") {
+  Rational R(-11, 23);
+  Rational L(-8, -15);
 
-    return R - L == Rational(-349, 345);
+  CHECK(R - L == Rational(-349, 345));
 }
 
-bool MulTest() {
-    return Rational(11, 12) * Rational(3, -11) == Rational(-1, 4);
+TEST_CASE("multiplication test") {
+  CHECK(Rational(11, 12) * Rational(3, -11) == Rational(-1, 4));
 }
 
-bool DivTest() {
-    return Rational(-15, 16) / Rational(5, -4) == Rational(3, 4);
-}
-
-void RunTests() {
-    TEST("IO Test", IOTest);
-    TEST("Reduce Test", ReduceTest);
-    TEST("Comparation Test", CmpTest);
-    TEST("Summ and Substraction Test", SumSubTest);
-    TEST("Multiplication Test", MulTest);
-    TEST("Division Test", DivTest);
-}
-
-int main() {
-    RunTests();
-    return 0;
+TEST_CASE("division test") {
+  CHECK(Rational(-15, 16) / Rational(5, -4) == Rational(3, 4));
 }
