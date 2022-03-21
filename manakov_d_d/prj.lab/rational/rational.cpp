@@ -1,8 +1,9 @@
 #include "rational.h"
+
 #include <stdexcept>
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define _SIGN(a) (((a) >= 0) ? 1 : -1) // incorrect but very usefull
+#define _SIGN(a) (((a) >= 0) ? 1 : -1)  // incorrect but very usefull
 #define ABS(a) (((a) > 0) ? (a) : -(a))
 
 Rational::Rational() = default;
@@ -59,7 +60,7 @@ Rational &Rational::operator*=(const Rational &other) {
 }
 
 Rational &Rational::operator/=(const Rational &other) {
-  if (other.Numerator() == 0) {
+  if (other.num() == 0) {
     throw std::overflow_error("Divide by zero exception");
   }
 
@@ -70,9 +71,9 @@ Rational &Rational::operator/=(const Rational &other) {
   return *this;
 }
 
-const int &Rational::Numerator() const { return numerator; }
+const int &Rational::num() const { return numerator; }
 
-const int &Rational::Denominator() const { return denominator; }
+const int &Rational::denum() const { return denominator; }
 
 void Rational::reduce() {
   for (int i = 1; i * i < MIN(ABS(numerator), ABS(denominator)); ++i)
@@ -80,25 +81,43 @@ void Rational::reduce() {
       numerator /= i;
       denominator /= i;
     }
+
+  if (numerator <= 0 && denominator < 0) {
+    numerator *= -1;
+    denominator *= -1;
+  }
 }
 
-std::ostream &operator<<(std::ostream &out, const Rational &rational) {
-  out << rational.Numerator() << " / " << rational.Denominator();
+std::istream &Rational::read_from(std::istream &in) {
+  if (in.eof()) {
+    in.setstate(std::ios_base::eofbit);
+  }
+
+  if (in >> this->numerator >> this->denominator) {
+    in.setstate(std::ios_base::failbit);
+  }
+
+  reduce();
+
+  return in;
+}
+
+std::ostream &Rational::write_to(std::ostream &out) const {
+  out << this->numerator << " / " << this->denominator;
+
   return out;
 }
 
 std::istream &operator>>(std::istream &in, Rational &rational) {
-  int numerator;
-  int denominator;
-  in >> numerator >> denominator;
+  return rational.read_from(in);
+}
 
-  rational = Rational(numerator, denominator);
-  return in;
+std::ostream &operator<<(std::ostream &out, const Rational &rational) {
+  return rational.write_to(out);
 }
 
 bool operator<(const Rational &first, const Rational &second) {
-  return first.Numerator() * second.Denominator() <
-         second.Numerator() * first.Denominator();
+  return first.num() * second.denum() < second.num() * first.denum();
 }
 
 bool operator>(const Rational &first, const Rational &second) {

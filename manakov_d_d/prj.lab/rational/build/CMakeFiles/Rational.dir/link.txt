@@ -1,0 +1,2 @@
+/usr/bin/ar qc libRational.a CMakeFiles/Rational.dir/rational.cpp.o
+/usr/bin/ranlib libRational.a

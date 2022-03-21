@@ -1,11 +1,15 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "rational.h"
 #include <doctest/doctest.h>
+
 #include <sstream>
+
+#include "rational.h"
 
 TEST_CASE("testing input / output") {
   std::stringstream ss;
   ss << "-3 -7";
+
+  CHECK(ss.good());
 
   Rational R;
   ss >> R;
@@ -21,8 +25,8 @@ TEST_CASE("testing input / output") {
 TEST_CASE("testing reduce method") {
   Rational R(210, -231);
 
-  CHECK(R.Numerator() == -10);
-  CHECK(R.Denominator() == 11);
+  CHECK(R.num() == -10);
+  CHECK(R.denum() == 11);
 }
 
 TEST_CASE("testing comparations") {
@@ -43,4 +47,10 @@ TEST_CASE("multiplication test") {
 
 TEST_CASE("division test") {
   CHECK(Rational(-15, 16) / Rational(5, -4) == Rational(3, 4));
+}
+
+TEST_CASE("other") {
+  Rational r(123);
+
+  CHECK(r == Rational(123, 1));
 }
