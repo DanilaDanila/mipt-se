@@ -5,19 +5,19 @@
 
 class Rational {
  public:
-  Rational();
+  Rational() = default;
 
-  ~Rational();
+  ~Rational() = default;
 
   Rational(const int numerator, const int denominator = 1);
 
-  Rational(const Rational &);
+  Rational(const Rational &) = default;
 
-  Rational(Rational &&other);
+  Rational(Rational &&) = default;
 
-  Rational &operator=(const Rational &);
+  Rational &operator=(const Rational &) = default;
 
-  Rational &operator=(Rational &&other);
+  Rational &operator=(Rational &&) = default;
 
   const Rational operator+() const;
 
@@ -30,6 +30,8 @@ class Rational {
   Rational &operator*=(const Rational &);
 
   Rational &operator/=(const Rational &);
+
+  explicit operator std::string() const;
 
   const int &num() const;
 

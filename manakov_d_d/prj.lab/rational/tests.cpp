@@ -7,19 +7,19 @@
 
 TEST_CASE("testing input / output") {
   std::stringstream ss;
-  ss << "-3 -7";
+  ss << "-3/7";
 
   CHECK(ss.good());
 
   Rational R;
   ss >> R;
-  CHECK(R == Rational(3, 7));
+  CHECK(R == Rational(-3, 7));
   ss.clear();
 
   ss << R;
   std::string output;
   std::getline(ss, output);
-  CHECK(output == "3 / 7");
+  CHECK(output == "-3/7");
 }
 
 TEST_CASE("testing reduce method") {
