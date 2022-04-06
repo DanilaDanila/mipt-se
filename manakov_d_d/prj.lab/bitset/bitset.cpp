@@ -1,4 +1,4 @@
-#include <bitset/BitSet.h>
+#include <bitset/bitset.h>
 #include <iostream>
 
 BitSet::BitSet() : BitSet(0) {}
