@@ -1,43 +1,49 @@
 #ifndef M3I_H
 #define M3I_H
 
+#include <iosfwd>
+
 class M3i {
- public:
+public:
   M3i();
+  M3i(int d1, int d2, int d3);
+  // легкая копия(подсчет ссылок)
+  M3i(const M3i &other);
+  // легкая копия(подсчет ссылок)
+  M3i &operator=(const M3i &other);
+
+  M3i(M3i &&other);
+  M3i &operator=(M3i &&other);
+
   ~M3i();
 
-  M3i(const int size_dim0, const int size_dim1, const int size_dim2);
+  // полная копия данных
+  const M3i Clone() const;
 
-  // M3i(std::initializer_list)
+  M3i &Resize(int d1, int d2, int d3);
 
-  M3i(const M3i&);  // light copy (ref count)
+  // доступ к элементу
+  int &At(int i, int j, int k);
+  int At(int i, int j, int k) const;
 
-  M3i(M3i&&);
+  // получение размера по измерению 0, 1, 2
+  int Size(int dim) const;
+  // заполнение значениями
+  void Fill(int val);
 
-  M3i& operator=(const M3i&);  // light copy (ref count)
+  std::ostream &WriteTo(std::ostream &ostrm) const;
+  std::istream &ReadFrom(std::istream &istrm);
 
-  M3i& operator=(M3i&&);
+private:
+  int dim0;
+  int dim1;
+  int dim2;
 
-  M3i clone() const;  // deep copy
-
-  int& operator[](const int i, const int j, const int k);
-  int operator[](const int i, const int j, const int k) const;
-
-  int& at(const int i, const int j, const int k);
-
-  int at(const int i, const int j, const int k) const;
-
-  int size(const int dim);  // tensor.shape[dim]
-
-  void fill(const int val);
-
- private:
-  int* data;
-  int ref_counter;
+  int *data;
+  int *ref_counter;
 };
 
-std::istream& operator>>(std::istream& in, M3i& m3i);
+std::istream &operator>>(std::istream &istrm, M3i &m);
+std::ostream &operator<<(std::ostream &ostrm, const M3i &m);
 
-std::ostream& operator<<(std::ostream& out, const M3i& m3i);
-
-#endif  // M3I_H
+#endif // M3I_H
