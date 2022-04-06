@@ -4,59 +4,37 @@
 #include <iosfwd>
 
 class Rational {
- public:
-  Rational() = default;
-
-  ~Rational() = default;
-
-  Rational(const int numerator);
-
-  Rational(const int numerator, const int denominator);
-
+public:
+  Rational();
   Rational(const Rational &) = default;
-
   Rational(Rational &&) = default;
+  Rational(const int num, const int denum = 1);
 
   Rational &operator=(const Rational &) = default;
-
   Rational &operator=(Rational &&) = default;
 
-  Rational operator+() const;
-
-  Rational operator-() const;
-
-  Rational &operator+=(const Rational &);
-
-  Rational &operator-=(const Rational &);
-
-  Rational &operator*=(const Rational &);
-
-  Rational &operator/=(const Rational &);
-
-  explicit operator std::string() const;
-
   int num() const;
-
   int denum() const;
 
-  std::istream &read_from(std::istream &);
+  const Rational &operator+() const;
+  const Rational operator-() const;
 
-  std::ostream &write_to(std::ostream &) const;
+  Rational &operator+=(const Rational &rhs);
+  Rational &operator-=(const Rational &rhs);
+  Rational &operator*=(const Rational &rhs);
+  Rational &operator/=(const Rational &rhs);
 
-  // comparisons
-  bool operator<(const Rational &second) const;
+  bool operator==(const Rational &rhs) const;
+  bool operator!=(const Rational &rhs) const;
+  bool operator<(const Rational &rhs) const;
+  bool operator<=(const Rational &rhs) const;
+  bool operator>(const Rational &rhs) const;
+  bool operator>=(const Rational &rhs) const;
 
-  bool operator>(const Rational &second) const;
+  std::istream &read_from(std::istream &in);
+  std::ostream &write_to(std::ostream &out) const;
 
-  bool operator<=(const Rational &second) const;
-
-  bool operator>=(const Rational &second) const;
-
-  bool operator==(const Rational &second) const;
-
-  bool operator!=(const Rational &second) const;
-
- private:
+private:
   /*       numerator
    * R = -------------
    *      denominator
@@ -67,18 +45,12 @@ class Rational {
   void reduce();
 };
 
-// input / output
-std::ostream &operator<<(std::ostream &out, const Rational &rational);
+std::istream &operator>>(std::istream &in, Rational &r);
+std::ostream &operator<<(std::ostream &out, const Rational &r);
 
-std::istream &operator>>(std::istream &in, Rational &rational);
+const Rational operator+(const Rational &lhs, const Rational &rhs);
+const Rational operator-(const Rational &lhs, const Rational &rhs);
+const Rational operator*(const Rational &lhs, const Rational &rhs);
+const Rational operator/(const Rational &lhs, const Rational &rhs);
 
-// binary arithmetic operators
-const Rational operator+(const Rational &first, const Rational &second);
-
-const Rational operator-(const Rational &first, const Rational &second);
-
-const Rational operator*(const Rational &first, const Rational &second);
-
-const Rational operator/(const Rational &first, const Rational &second);
-
-#endif  // RATIONAL_H
+#endif // RATIONAL_H

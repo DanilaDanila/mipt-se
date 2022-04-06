@@ -1,15 +1,15 @@
-#include "rational.h"
+#include <rational/rational.h>
 
 #include <iostream>
 #include <stdexcept>
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define _SIGN(a) (((a) >= 0) ? 1 : -1)  // incorrect but very usefull
+#define _SIGN(a) (((a) >= 0) ? 1 : -1) // incorrect but very usefull
 #define ABS(a) (((a) > 0) ? (a) : -(a))
 
-Rational::Rational(const int numerator) : Rational(numerator, 1) {}
+Rational::Rational() : Rational(0) {}
 
-Rational::Rational(const int numerator, const int denominator = 1)
+Rational::Rational(const int numerator, const int denominator)
     : numerator(_SIGN(numerator) * _SIGN(denominator) * ABS(numerator)),
       denominator(ABS(denominator)) {
   // check correct input
@@ -20,9 +20,9 @@ Rational::Rational(const int numerator, const int denominator = 1)
   reduce();
 }
 
-Rational Rational::operator+() const { return *this; }
+const Rational &Rational::operator+() const { return *this; }
 
-Rational Rational::operator-() const {
+const Rational Rational::operator-() const {
   return Rational(-numerator, denominator);
 }
 
@@ -140,6 +140,8 @@ bool Rational::operator==(const Rational &second) const {
 bool Rational::operator!=(const Rational &second) const {
   return *this < second || *this > second;
 }
+
+/*****************/
 
 const Rational operator+(const Rational &first, const Rational &second) {
   return Rational(first) += second;
