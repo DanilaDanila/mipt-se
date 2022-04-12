@@ -8,10 +8,8 @@ inline void unimplemented() { assert(false); }
 M3i::M3i() = default;
 
 M3i::M3i(int d0, int d1, int d2)
-    : data(new int[d0 * d1 * d2]), dim0(d0), dim1(d1), dim2(d2),
-      ref_counter(new int(1)) {
-  Fill(0);
-}
+    : data(new int[d0 * d1 * d2]()), dim0(d0), dim1(d1), dim2(d2),
+      ref_counter(new int(1)) {}
 
 M3i::M3i(const M3i &other) {
   if (data != nullptr) {
