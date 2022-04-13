@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define _SIGN(a) (((a) >= 0) ? 1 : -1) // incorrect but very usefull
