@@ -76,26 +76,8 @@ BitSet::BitHolder BitSet::operator[](int idx) {
 }
 
 bool BitSet::operator[](int idx) const {
-  // семь бед - один ответ ...
-  BitHolder bh = (*const_cast<BitSet *>(this))[idx];
-  return static_cast<bool>(bh);
-}
-
-BitSet::BitHolder BitSet::At(int idx) {
-  if (idx > size) {
-    throw std::out_of_range("idx out of range");
-  }
-
-  uint16_t *ptr = &(*(data.begin() + (idx / 16)));
-  /* Внимание!!!
-   * Вот именно вот тут (в return) опять нужен BitHolder(BitHolder &&)
-   */
-  return BitHolder(ptr, idx % 16);
-}
-
-bool BitSet::At(int idx) const {
-  BitHolder bh = (*const_cast<BitSet *>(this))[idx];
-  return static_cast<bool>(bh);
+  const uint16_t holder = (*(data.begin() + (idx / 16)));
+  return (holder & (1 << (idx % 16))) > 0;
 }
 
 BitSet::BitHolder::BitHolder(uint16_t *byte, uint16_t shift)

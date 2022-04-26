@@ -11,7 +11,8 @@ private:
 
 public:
   BitSet();
-  BitSet(int length, bool default_value = false);
+  // except: length <= 0
+  BitSet(const int length, const bool default_value = false);
 
   BitSet(const BitSet &);
   BitSet(BitSet &&);
@@ -21,20 +22,24 @@ public:
 
   ~BitSet();
 
+  // except: this->size != other.size
   BitSet &operator|=(const BitSet &other);
+  // except: this->size != other.size
   BitSet &operator^=(const BitSet &other);
+  // except: this->size != other.size
   BitSet &operator&=(const BitSet &other);
   const BitSet operator~() const;
 
   int Size() const;
-  void Resize(int new_size);
-  void Fill(bool value);
 
-  BitHolder operator[](int idx);
-  bool operator[](int idx) const;
+  // except: length <= 0
+  void Resize(const int new_size);
+  void Fill(const bool value);
 
-  BitHolder At(int idx);
-  bool At(int idx) const;
+  // except: idx < 0 or idx >= size
+  BitHolder operator[](const int idx);
+  // except: idx < 0 or idx >= size
+  bool operator[](const int idx) const;
 
 private:
   // можно будет вернуть, нельзя создавать
@@ -49,7 +54,7 @@ private:
 
     BitHolder &operator=(const BitHolder &);
     BitHolder &operator=(bool);
-    BitHolder &operator=(BitHolder &&) = delete;
+    BitHolder &operator=(BitHolder &&);
 
     explicit operator bool() const;
 
@@ -63,8 +68,14 @@ private:
   int size;
   std::vector<uint16_t> data;
 };
+// except: first.size != second.size
 const BitSet operator|(const BitSet &first, const BitSet &second);
+// except: first.size != second.size
 const BitSet operator&(const BitSet &first, const BitSet &second);
+// except: first.size != second.size
 const BitSet operator^(const BitSet &first, const BitSet &second);
+
+std::istream &operator>>(std::istream &istrm, BitSet &bs);
+std::ostream &operator<<(std::ostream &ostrm, const BitSet &bs);
 
 #endif // BIT_SET_H
