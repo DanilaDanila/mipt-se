@@ -1,5 +1,6 @@
 #include <bitset/bitset.h>
 #include <iostream>
+#include <string>
 
 BitSet::BitSet() : BitSet(0) {}
 
@@ -98,3 +99,48 @@ BitSet::BitHolder &BitSet::BitHolder::operator=(bool value) {
 }
 
 BitSet::BitHolder::operator bool() const { return (*holder & mask) != 0x0; }
+
+// except: first.size != second.size
+const BitSet operator|(const BitSet &first, const BitSet &second) {
+  return BitSet(first) |= second;
+}
+
+// except: first.size != second.size
+const BitSet operator&(const BitSet &first, const BitSet &second) {
+  return BitSet(first) &= second;
+}
+
+// except: first.size != second.size
+const BitSet operator^(const BitSet &first, const BitSet &second) {
+  return BitSet(first) ^= second;
+}
+
+std::istream &operator>>(std::istream &in, BitSet &bs) {
+  std::string input;
+  in >> input;
+
+  bs.Resize(input.size());
+  bs.Fill(false);
+
+  for (int i = 0; i < input.size(); ++i) {
+    char c = input[i];
+    if (c == '0') {
+      continue;
+    } else if (c == '1') {
+      bs[i] = true;
+    } else {
+      in.setstate(std::ios_base::failbit);
+      break;
+    }
+  }
+
+  return in;
+}
+
+std::ostream &operator<<(std::ostream &out, const BitSet &bs) {
+  for (int i = 0; i < bs.Size(); ++i) {
+    out << ('0' + int(bs[i]));
+  }
+
+  return out;
+}

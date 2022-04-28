@@ -75,7 +75,7 @@ const BitSet operator&(const BitSet &first, const BitSet &second);
 // except: first.size != second.size
 const BitSet operator^(const BitSet &first, const BitSet &second);
 
-std::istream &operator>>(std::istream &istrm, BitSet &bs);
-std::ostream &operator<<(std::ostream &ostrm, const BitSet &bs);
+std::istream &operator>>(std::istream &in, BitSet &bs);
+std::ostream &operator<<(std::ostream &out, const BitSet &bs);
 
 #endif // BIT_SET_H

@@ -132,7 +132,7 @@ int M3i::At(int i, int j, int k) const {
 // получение размера по измерению 0, 1, 2
 // except: dim < 0 or dim > 2
 int M3i::Size(int dim) const {
-  if (dim < 0 or dim > 2) {
+  if (dim < 0 || dim > 2) {
     throw std::invalid_argument("dim must be between 0 and 2");
   }
   return tensor->shape[dim];
@@ -205,20 +205,20 @@ std::ostream &operator<<(std::ostream &out, const M3i &m) {
 }
 
 void M3i::CheckDims() {
-  if (tensor->shape[0] <= 0 or tensor->shape[1] <= 0 or tensor->shape[2] <= 0) {
+  if (tensor->shape[0] <= 0 || tensor->shape[1] <= 0 || tensor->shape[2] <= 0) {
     throw std::invalid_argument("dimensions must be above zero");
   }
 }
 
 void M3i::CheckDims(int d0, int d1, int d2) const {
-  if (d0 <= 0 or d1 <= 0 or d2 <= 0) {
+  if (d0 <= 0 || d1 <= 0 || d2 <= 0) {
     throw std::invalid_argument("dimensions must be above zero");
   }
 }
 
 void M3i::CheckIndexes(int d0, int d1, int d2) const {
-  if (d0 < 0 or d1 < 0 or d2 < 0 or tensor->shape[0] <= d0 or
-      tensor->shape[1] <= d1 or tensor->shape[2] <= d2) {
+  if (d0 < 0 || d1 < 0 || d2 < 0 || tensor->shape[0] <= d0 or
+      tensor->shape[1] <= d1 || tensor->shape[2] <= d2) {
     throw std::out_of_range("index(es) out of range");
   }
 }
