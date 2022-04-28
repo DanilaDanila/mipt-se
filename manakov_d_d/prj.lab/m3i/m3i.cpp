@@ -37,7 +37,7 @@ M3i::M3i(int d0, int d1, int d2) {
   tensor->shape[2] = d2;
   tensor->capacity = d0 * d1 * d2;
   CheckDims();
-  tensor->data = new int[tensor->capacity]();
+  tensor->data = new int[tensor->capacity];
 }
 
 M3i::M3i(int d0, int d1, int d2, int fill) {
