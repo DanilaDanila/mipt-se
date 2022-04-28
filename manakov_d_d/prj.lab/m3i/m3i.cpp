@@ -217,7 +217,7 @@ void M3i::CheckDims(int d0, int d1, int d2) const {
 }
 
 void M3i::CheckIndexes(int d0, int d1, int d2) const {
-  if (d0 < 0 || d1 < 0 || d2 < 0 || tensor->shape[0] <= d0 or
+  if (d0 < 0 || d1 < 0 || d2 < 0 || tensor->shape[0] <= d0 ||
       tensor->shape[1] <= d1 || tensor->shape[2] <= d2) {
     throw std::out_of_range("index(es) out of range");
   }
