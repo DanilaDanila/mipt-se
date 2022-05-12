@@ -52,6 +52,16 @@ BitSet &BitSet::operator&=(const BitSet &other) {
   return *this;
 }
 
+const BitSet BitSet::operator~() const {
+  BitSet bs(this->data.size());
+
+  for (int i = 0; i < data.size(); ++i) {
+    bs.data[i] = ~this->data[i];
+  }
+
+  return bs;
+}
+
 int BitSet::Size() const { return size; }
 
 void BitSet::Resize(int size) {
