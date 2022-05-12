@@ -49,6 +49,9 @@ M3i::M3i(int d0, int d1, int d2, int fill) {
   CheckDims();
   tensor->data = new int[tensor->capacity]();
 
+  if (fill == 0)
+    return;
+
   for (int i = 0; i < tensor->capacity; ++i)
     tensor->data[i] = fill;
 }
